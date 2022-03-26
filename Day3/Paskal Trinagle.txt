@@ -1,0 +1,45 @@
+class Solution {
+    public List<List<Integer>> generate(int n) {
+        List<List<Integer>> res=new ArrayList<>();
+         ArrayList<Integer> demo=new ArrayList<>();
+        demo.add(1);
+        res.add(demo);
+        if(n==1)
+        {
+          return res;
+        }
+        ArrayList<Integer> demo2=new ArrayList<>();
+            demo2.add(1);
+             demo2.add(1);
+            res.add(demo2);
+         if(n==2)
+        {
+            return res;
+        }
+        for(int i=1;i<n-1;i++)
+        {
+            ArrayList<Integer> demo3=new ArrayList<>();
+            for(int j=0;j<=i;j++)
+            {
+               
+                if(j==0)
+                {
+                    demo3.add(1);
+                }
+                if(j==i)
+                {
+                    demo3.add(1);
+                }else
+                {
+                    int sum=res.get(i).get(j)+res.get(i).get(j+1);
+                    demo3.add(sum);
+                }
+               
+            }
+             res.add(demo3);
+        }
+        return res;
+        
+        
+    }
+}
