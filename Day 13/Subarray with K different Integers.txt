@@ -1,0 +1,27 @@
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return ok(nums,k)-ok(nums,k-1);
+    }
+    public static int ok(int nums[],int k)
+    {
+        int left=0;
+        int right=0;
+        int count=0;
+        HashMap<Integer,Integer> dis=new HashMap<>();
+        while(right<nums.length)
+        {
+            dis.put(nums[right],dis.getOrDefault(nums[right],0)+1);
+                while(left<=right && dis.size()>k)
+                {
+                    dis.put(nums[left],dis.get(nums[left])-1);
+                    if(dis.get(nums[left])==0)
+                        dis.remove(nums[left]);
+                    left++;
+                }
+            count+=right-left+1;
+            right+=1;
+        }
+        return count;
+        
+    }
+}
