@@ -1,0 +1,22 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
+		////edge case when -2^31 is divided by -1 will give 2^31 which doesnt exist so overflow 
+        boolean negative = dividend < 0 ^ divisor < 0;//Logical XOR will help in deciding if the results is negative only if any one of them is negative
+        int n = Math.abs(dividend);
+        int m = Math.abs(divisor);
+        int counter = 0;
+        while(n-m>=0)
+        {
+            int x = 0;
+            
+            while (n-(m<<x<<1)>=0)
+            {
+            x = x+1;
+            }
+            counter = counter+(1<<x);//Add to the quotient
+            n = n-(m<<x);//Substract from dividend to start over with the remaining
+        }
+        return negative?-counter:counter;
+    }
+}

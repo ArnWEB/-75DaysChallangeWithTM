@@ -1,0 +1,56 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        
+        int len = weights.length;
+        int start = 0;
+        int end = 0;
+        
+        for(int i = 0; i<len; i++){
+            if(weights[i]>start)
+                start = weights[i];         // start will be max weight/pages
+            end+=weights[i];                // end will be sum of all weights/pages
+        }
+        
+        int result = -1;
+        
+        while(start<=end){
+            // checking for this mid, whether it is possible to ship/allocate all weights/books in/to days/students
+            int mid = (start+end)/2;
+            
+            if(isPossible(weights, len, days, mid)){
+                // store possible capacity/pages to ship/allocate all weights/books in/to days/students
+                result = mid;
+                // searching further if less capacity/pages possible
+                end = mid - 1;
+            } else {
+                // not possible, so increasing my current capacity/pages
+                start = mid + 1;
+            }
+        }
+        return result;
+    }
+    
+    boolean isPossible(int[] weights, int length, int days, int mid) {
+        int day = 1;
+        int weightSum = 0;
+        
+        for(int i : weights){
+            
+            // conveyer belt is used, so continuos shipping/allocation is required
+            weightSum+=i;
+            // if current capacity(mid) is exceeded, need to increase the day
+            if(weightSum>mid){
+                day++;
+                //weightSum is initialized to current weight, first weight of next day
+                weightSum = i;
+            }
+            // if day exceeds given days, not possible to ship with current capacity(mid) 
+            if(day>days){
+                return false;
+            }
+        }
+        // possible to ship with current capacity(mid), as all weights have been assigned their respective days
+        return true;
+        
+    }
+}
