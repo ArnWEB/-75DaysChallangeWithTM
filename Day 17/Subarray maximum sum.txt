@@ -1,0 +1,46 @@
+class Solution {
+    public static boolean isok(int []num,int mid,int m)
+    {
+        int count=1;
+        int sum=0;
+        for(int i=0;i<num.length;i++)
+        {
+            sum+=num[i];
+            if(sum>mid)
+            {
+                count++;
+                sum=num[i];
+            }
+        }
+        return count<=m;
+        
+    }
+    public int splitArray(int[] nums, int m) {
+        int max=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            max=Math.max(max,nums[i]);
+            sum=sum+max;
+        }
+        int high=sum;
+        int low=max;
+        int ans=Integer.MAX_VALUE;
+        while(low<=high)
+        {
+            int mid=low+high>>1;
+            if(isok(nums,mid,m))
+            {
+                ans=Math.min(ans,mid);
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+            
+        }
+        return ans;
+        
+    }
+}
