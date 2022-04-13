@@ -1,0 +1,107 @@
+class Solution {
+    public static ListNode reverse(ListNode head)
+    {
+        ListNode prev=null;
+        ListNode temp=head;
+        while(temp!=null)
+        {
+            ListNode a=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=a;
+        }
+        return prev;
+    }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode temp1=l1;
+        ListNode temp2=l2;
+        int count1=0;
+        int count2=0;
+        while(temp1!=null)
+        {
+            count1++;
+            temp1=temp1.next;
+        }
+        while(temp2!=null)
+        {
+            count2++;
+            temp2=temp2.next;
+        }
+        if(count1==count2)
+        {
+            ListNode rev1=reverse(l1);
+        ListNode rev2=reverse(l2);
+        ListNode d1=rev1;
+        ListNode d2=rev2;
+        int carry=0;
+        while(d1!=null && d2!=null)
+        {
+            d1.val=d1.val+d2.val+carry;
+            carry=0;
+            if (d1.val>=10)
+            {
+                int temp=d1.val%10;
+                carry=d1.val/10;
+                d1.val=temp;
+            }
+            d1=d1.next;
+            d2=d2.next;
+        }
+            if(carry!=0)
+            {
+                ListNode t=rev1;
+                while(t.next!=null)
+                {
+                    t=t.next;
+                }
+                t.next=new ListNode(carry);
+            }
+            return reverse(rev1);
+        }
+        if(count2>count1)
+            return addTwoNumbers(l2,l1);
+        ListNode rev1=reverse(l1);
+        ListNode rev2=reverse(l2);
+        ListNode d1=rev1;
+        ListNode d2=rev2;
+        int carry=0;
+        while(d1!=null && d2!=null)
+        {
+            d1.val=d1.val+d2.val+carry;
+            carry=0;
+            if (d1.val>=10)
+            {
+                int temp=d1.val%10;
+                carry=d1.val/10;
+                d1.val=temp;
+            }
+            d1=d1.next;
+            d2=d2.next;
+        }
+        while(d1!=null)
+        {
+            d1.val=d1.val+carry;
+            carry=0;
+             if (d1.val>=10)
+            {
+                int temp=d1.val%10;
+                carry=d1.val/10;
+                d1.val=temp;
+            }
+            d1=d1.next;
+        }
+        System.out.println(carry);
+       if(carry!=0)
+            {
+              ListNode t=rev1;
+                while(t.next!=null)
+                {
+                    t=t.next;
+                }
+                t.next=new ListNode(carry);
+            }
+        return reverse(rev1);
+        
+        
+    }
+}
